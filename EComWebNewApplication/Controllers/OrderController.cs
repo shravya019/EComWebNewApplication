@@ -14,20 +14,20 @@ namespace EComWebNewApplication.Controllers
         }
 
         // Shows the list of orders
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Order> orders = _orderService.GetOrdersSortedByDate();
+            List<Order> orders = await _orderService.GetOrdersSortedByDateAsync();
             return View(orders);
         }
 
-        // ✅ GET method to show the order form
+        // GET method to show the order form
         [HttpGet]
         public IActionResult PlaceOrderForm()
         {
             return View(); // This will load PlaceOrderForm.cshtml
         }
 
-        // ✅ POST method to place an order
+        //  POST method to place an order
         [HttpPost]
         public async Task<IActionResult> PlaceOrder(Order order)
         {
@@ -35,7 +35,7 @@ namespace EComWebNewApplication.Controllers
             return RedirectToAction("Index"); // Redirect to order list
         }
 
-        // ✅ Optional: Get status of an order
+        // Optional: Get status of an order
         public async Task<IActionResult> GetOrderStatusAsync(int orderId)
         {
             string status = await _orderService.GetOrderStatusAsync(orderId);

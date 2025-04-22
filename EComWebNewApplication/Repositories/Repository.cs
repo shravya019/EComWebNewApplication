@@ -1,4 +1,6 @@
-﻿using System;
+﻿//repo is not needed in this project as we are using database
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 

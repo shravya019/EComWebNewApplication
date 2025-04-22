@@ -1,47 +1,47 @@
-﻿
-using EComWebNewApplication.Products;
-using EComWebNewApplication.Repositories;
-namespace EComWebNewApplication.Services
+﻿using EComWebNewApplication.Data;
+using EComWebNewApplication.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 
+namespace EComWebNewApplication.Services
 {
     public class ProductService
     {
-        private readonly Repository<IProduct> _repository;
+        private readonly ApplicationDbContext _context;
 
-        public ProductService()
+        public ProductService(ApplicationDbContext context)
         {
-            _repository = new Repository<IProduct>();
-
-            // Add initial products
-            _repository.Add(new Product { ProductId = 1, Name = "Laptop", Price = 1200.00M ,Category="Electronics"});
-            _repository.Add(new Product { ProductId = 2, Name = "Mouse", Price = 25.99M, Category = "Electronics" });
-            _repository.Add(new Product { ProductId = 3, Name = "Monitor", Price = 300.00M, Category = "Electronics" });
+            _context = context;
         }
 
-        public List<IProduct> GetAllProducts()
+        public async Task<List<Product>> GetAllProductsAsync()
         {
-            return _repository.GetAll().ToList();
+            return await _context.Products.ToListAsync();
         }
 
-        public List<IProduct> GetExpensiveProducts(decimal minPrice)
+        public async Task<Product?> GetProductByIdAsync(int id)
         {
-            return _repository.Find(p => p.Price > minPrice).ToList();
+            return await _context.Products.FindAsync(id);
         }
 
-        public void AddProduct(IProduct product)
+        public async Task<List<Product>> GetExpensiveProductsAsync(decimal minPrice)
         {
-            _repository.Add(product);
+            return await _context.Products
+                                 .Where(p => p.Price > minPrice)
+                                 .ToListAsync();
         }
 
-        public IProduct GetProductById(int id)
+        public async Task AddProductAsync(Product product)
         {
-            return _repository.Find(p => p.ProductId == id).FirstOrDefault();
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
         }
 
-        public List<IProduct> GetProductsByCategory(string category)
+        public async Task<List<Product>> GetProductsByCategoryAsync(string category)
         {
-            return _repository.Find(p => p.Category == category).ToList();  
+            return await _context.Products
+                                 .Where(p => p.Category == category)
+                                 .ToListAsync();
         }
     }
-
 }

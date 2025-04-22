@@ -1,4 +1,4 @@
-﻿using EComWebNewApplication.Products;
+﻿using EComWebNewApplication.Models;
 using EComWebNewApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +13,10 @@ namespace EComWebNewApplication.Controllers
             _productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var products = _productService.GetAllProducts();
+            var products = await _productService.GetAllProductsAsync();
             return View(products);
         }
     }
-
 }

@@ -23,11 +23,14 @@ public class Program
         builder.Services.AddControllersWithViews();
 
         // **Implementing ProductService for dependency injection 
-        builder.Services.AddSingleton<ProductService>();
-        builder.Services.AddSingleton<OrderService>();
+        builder.Services.AddScoped<ProductService>();
+       
+
+        // **Implementing OrderService for dependency injection
+        
+        builder.Services.AddScoped<OrderService>();
 
         builder.Services.AddControllersWithViews();
-        builder.Services.AddScoped<OrderService>();
 
 
 

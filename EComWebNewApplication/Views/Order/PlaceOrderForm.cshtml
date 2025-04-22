@@ -1,0 +1,18 @@
+﻿@model EComWebNewApplication.Orders.Order
+
+<h2>Place Order</h2>
+
+<form asp-controller="Order" asp-action="PlaceOrder" method="post">
+
+   
+
+    <div>
+        <label for="CustomerName">Customer Name:</label>
+        <input type="text" id="CustomerName" name="CustomerName" required />
+    </div>
+    <div>
+        <label for="OrderDate">Order Date:</label>
+        <input type="date" id="OrderDate" name="OrderDate" required />
+    </div>
+    <button type="submit">Place Order</button>
+</form>

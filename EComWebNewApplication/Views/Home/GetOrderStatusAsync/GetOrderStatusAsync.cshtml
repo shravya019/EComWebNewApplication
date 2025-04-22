@@ -1,0 +1,17 @@
+﻿@page
+@model EComWebNewApplication.Views.Home.GetOrderStatusAsync.GetOrderStatusAsyncModel
+@{
+    ViewData["Title"] = "Order Status";
+}
+
+<h2>Order Status</h2>
+
+@if (ViewData["OrderStatus"] != null)
+{
+    <p>@ViewData["OrderStatus"]</p>
+}
+else
+{
+    <p>No status available for this order.</p>
+}
+

@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using EComWebNewApplication.Data;
-using EComWebNewApplication.Services;
+//using EComWebNewApplication.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 namespace EComWebNewApplication;
@@ -13,24 +14,20 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        builder.Services.AddControllersWithViews();
+
+
+        // EF Core
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString));
-        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        //Cookies Based Authentication
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+        });
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-        builder.Services.AddControllersWithViews();
 
-        // **Implementing ProductService for dependency injection 
-        builder.Services.AddScoped<ProductService>();
-       
-
-        // **Implementing OrderService for dependency injection
-        
-        builder.Services.AddScoped<OrderService>();
-
-        builder.Services.AddControllersWithViews();
 
 
 
@@ -60,8 +57,15 @@ public class Program
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Order}/{action=Index}/{id?}");
-        app.MapRazorPages();
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+        //app.MapRazorPages();
+
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var services = scope.ServiceProvider;
+        //    var context = services.GetRequiredService<ApplicationDbContext>();
+        //    DbInitializer.Seed(context); // Seed dummy data
+        //}
 
         app.Run();
     }

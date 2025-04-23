@@ -1,15 +1,16 @@
-﻿namespace EComWebNewApplication.Users
-{
-    public class Customer : User
-    {
-        public override void DisplayUserInfo()
-        {
-            Console.WriteLine($"Customer: {Username}, Role: {Role}");
-        }
+﻿using EComWebNewApplication.Orders;
 
-        public void PlaceOrder()
-        {
-            Console.WriteLine($"{Username} is placing an order");
-        }
+namespace EComWebNewApplication.Users
+{
+    public class Customer
+    {
+        public int Id { get; set; }
+        public string? CustomerName { get; set; }
+        public string? Email { get; set; }
+        
+        public string? Password { get; set; }
+        public string? Phone { get; set; }
+        public string? BillingAddress { get; set; }
+        public List<Order>? Orders { get; set; }
     }
 }

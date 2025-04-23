@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EComWebNewApplication.Views.Order
+namespace EComWebNewApplication.Views.Template
 {
-    public class PlaceOrderFormModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {

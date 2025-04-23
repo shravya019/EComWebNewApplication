@@ -1,20 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using EComWebNewApplication.Users;
 
 namespace EComWebNewApplication.Orders
 {
     public class Order
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }
-
-        public string CustomerName { get; set; }
+        public int Id { get; set; }
+        // Foreign key and navigation property for Customer
+        public int CustomerId { get; set; }
+        public Customer? Customer { get; set; }
+        public string? OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
-
-        public OrderStatus Status { get; set; }  
-        public Address ShippingAddress { get; set; }
+        // Collection of OrderItems
+        // Navigation property: an order can have multiple order items.
+        public ICollection<OrderItem> OrderItems { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TotalAmount { get; set; }
+        // e.g., Pending, Completed, Canceled 
+        public string? OrderStatus { get; set; }
+        public DateTime CreatedDate { get; set; }
+        // Navigation property for Payment (one-to-one relationship)
+        public Payment Payment { get; set; }
     }
 
 }

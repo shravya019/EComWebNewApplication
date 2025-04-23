@@ -1,19 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EComWebNewApplication.Orders;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EComWebNewApplication.Models
 {
     public class Product
     {
-        [Key]
-        public int ProductId { get; set; }
-
-        [Required]
-        public string Name { get; set; } = string.Empty;
-
-        [Required]
-        public string Category { get; set; } = string.Empty;
-
-        [Range(0, double.MaxValue)]
-        public decimal Price { get; set; }
+        public int Id { get; set; }
+        public string ProductName { get; set; }
+        public string Category { get; set; }
+        public string? Description { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal UnitPrice { get; set; }
+        public List<OrderItem> Items { get; set; }
     }
 }

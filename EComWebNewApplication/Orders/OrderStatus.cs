@@ -2,11 +2,13 @@
 {
     public enum OrderStatus
     {
-        OrderProcesed = 1,
+        OrderCompletion = 1,
         OrderCancelled = 2,
         OrderPending = 3,
-        OrderShipped = 4,
-        OrderDelivered = 5
-       
+        PaymentSucess = 4,
+        PaymentFailed = 5,
+        PaymentPending = 6,
+        CustomerRegistration = 7
+
     }
 }
